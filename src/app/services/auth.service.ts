@@ -1,44 +1,33 @@
 // auth.service.ts
-
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
-  private baseUrl = 'your-backend-api-url';
-  private tokenKey = 'currentUser';
+  private localStorageKey = "currentUser";
 
-  constructor(private http: HttpClient) { }
-
-  login(username: string, password: string): Observable<any> {
-    const data = { username, password };
-    return this.http.post(`${this.baseUrl}/auth.php`, data).pipe(
-      map((response: any) => {
-        if (response.result === '1') {
-          localStorage.setItem(this.tokenKey, JSON.stringify(response));
-        }
-        return response;
-      }),
-      catchError(error => {
-        return throwError(error);
-      })
-    );
+  isAuthenticated(): boolean {
+    const currentUser = this.getCurrentUser();
+    console.log(currentUser);
+    return currentUser && currentUser.result === "1";
   }
 
-  getToken(): string | null {
-    const currentUser = localStorage.getItem(this.tokenKey);
-    if (currentUser) {
-      const { token } = JSON.parse(currentUser);
-      return token;
-    }
-    return null;
+  private getCurrentUser() {
+    const currentUserString = localStorage.getItem(this.localStorageKey);
+    return currentUserString ? JSON.parse(currentUserString) : null;
   }
 
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
+  login() {
+    // Simulating a login, store user information in local storage
+    const currentUser = {
+      result: "1",
+    };
+    localStorage.setItem(this.localStorageKey, JSON.stringify(currentUser));
+  }
+
+  logout() {
+    // Simulating a logout, remove user information from local storage
+    localStorage.removeItem(this.localStorageKey);
   }
 }

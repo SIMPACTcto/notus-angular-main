@@ -49,6 +49,9 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user-dropdown.component";
 import { AuthGuard } from "./services/auth.guard";
 import { Routes } from "@angular/router";
+import { HttpClientModule } from "@angular/common/http";
+
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -94,7 +97,7 @@ const routes: Routes = [
     LandingComponent,
     ProfileComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule,HttpClientModule],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
 })

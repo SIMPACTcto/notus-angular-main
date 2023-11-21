@@ -26,8 +26,9 @@ const routes: Routes = [
   {
     path: "admin",
     component: AdminComponent,
+    canActivate:[AuthGuard],
     children: [
-      { path: "dashboard",canActivate : [AuthGuard] ,component: DashboardComponent },
+      { path: "dashboard",component: DashboardComponent },
       { path: "settings", component: SettingsComponent },
       { path: "tables", component: TablesComponent },
       { path: "maps", component: MapsComponent },
