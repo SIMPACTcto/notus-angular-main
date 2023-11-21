@@ -47,6 +47,15 @@ import { PagesDropdownComponent } from "./components/dropdowns/pages-dropdown/pa
 import { NotificationDropdownComponent } from "./components/dropdowns/notification-dropdown/notification-dropdown.component";
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user-dropdown.component";
+import { AuthGuard } from "./services/auth.guard";
+import { Routes } from "@angular/router";
+
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  // Add other routes as needed
+  { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+];
 
 @NgModule({
   declarations: [
@@ -86,7 +95,7 @@ import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user
     ProfileComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
